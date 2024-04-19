@@ -1,5 +1,6 @@
 import my_functions
-import pickle
+import json
+import my_classes
 
 if __name__ == "__main__":
     
@@ -8,16 +9,15 @@ if __name__ == "__main__":
     x=input("Enter your Firstname: ")
     y=input("Enter your Lastname: ")
     z=input("Enter your sex: ")
-    a=input("Enter your age: ")
+    a=int(input("Enter your age: "))
     
     
     'Build a dictionary of information about a supervisor and a subject'
-    supervisor = my_functions.build_person("Samuel","Dabisch","male",19)
-    subject = my_functions.build_person(x,y,z,int(a))
+    supervisor = my_classes.Person("John","Doe","male",50)
+    subject = my_classes.Person(x,y,z,int(a))
     
     'Build a dictionary of information about an experiment'
-    experiment = my_functions.build_experiment("Experiment 1","2021-06-01",supervisor,subject)
-    
-    'Save dict as a Pickle file'
-    with open('expiremnt_data.pkl', 'wb') as fp:
-        pickle.dump([experiment], fp)
+    experiment = my_classes.Experiment("Experiment 1","2021-06-01",supervisor.__dict__,subject.__dict__)
+    my_classes.Person.save(subject,"subject.json")
+    my_classes.Person.save(supervisor,"supervisor.json")
+    my_classes.Experiment.save(experiment,"experiment.json")
